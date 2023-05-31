@@ -1,19 +1,14 @@
 package br.com.alura.bytebank.domain.conta;
-
-import br.com.alura.bytebank.domain.cliente.Cliente;
-
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import br.com.alura.bytebank.domain.cliente.Cliente;
 
 public class Conta {
 
     private Integer numero;
     private BigDecimal saldo;
     private Cliente titular;
-    
-    public Conta() {
-    	
-    }
 
     public Conta(Integer numero, BigDecimal saldo, Cliente titular) {
         this.numero = numero;

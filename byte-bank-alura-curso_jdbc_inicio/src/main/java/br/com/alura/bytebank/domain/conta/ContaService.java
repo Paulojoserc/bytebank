@@ -1,12 +1,12 @@
 package br.com.alura.bytebank.domain.conta;
 
-import br.com.alura.bytebank.ConnectionFactory;
-import br.com.alura.bytebank.domain.RegraDeNegocioException;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.HashSet;
 import java.util.Set;
+
+import br.com.alura.bytebank.ConnectionFactory;
+import br.com.alura.bytebank.domain.RegraDeNegocioException;
 
 public class ContaService {
 
@@ -51,13 +51,17 @@ public class ContaService {
         if (valor.compareTo(BigDecimal.ZERO) <= 0) {
             throw new RegraDeNegocioException("Valor do deposito deve ser superior a zero!");
         }
-
+        BigDecimal novoValor = conta.getSaldo().add(valor);
         Connection conn = connection.recuperarConexao();
-        new ContaDAO(conn).alterar(conta.getNumero(), valor);
-        
+        new ContaDAO(conn).alterar(conta.getNumero(), novoValor);
     }
 
-    public void encerrar(Integer numeroDaConta) {
+   public void realizarTransferencia(Integer numeroDaContaOrigem, Integer numeroDaContaDestino, BigDecimal valor) {
+	   this.realizarSaque(numeroDaContaOrigem, valor);
+	   this.realizarDeposito(numeroDaContaDestino, valor);
+   }
+
+	public void encerrar(Integer numeroDaConta) {
         var conta = buscarContaPorNumero(numeroDaConta);
         if (conta.possuiSaldo()) {
             throw new RegraDeNegocioException("Conta não pode ser encerrada pois ainda possui saldo!");

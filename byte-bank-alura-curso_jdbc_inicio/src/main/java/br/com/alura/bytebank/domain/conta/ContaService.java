@@ -67,8 +67,8 @@ public class ContaService {
             throw new RegraDeNegocioException("Conta não pode ser encerrada pois ainda possui saldo!");
         }
 
-        contas.remove(conta);
-    }
+       Connection conn = connection.recuperarConexao();
+       new ContaDAO(conn).deletar(numeroDaConta);}
 
     private Conta buscarContaPorNumero(Integer numero) {
         Connection conn = connection.recuperarConexao();

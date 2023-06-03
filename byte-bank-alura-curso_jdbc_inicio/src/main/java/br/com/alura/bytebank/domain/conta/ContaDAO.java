@@ -124,4 +124,16 @@ public class ContaDAO {
             throw new RuntimeException(e);
         }
     }
+    
+    public void deletar (Integer numeroDaConta) {
+    	String sql = "DELETE FROM conta WHERE numero = ?";
+    	
+    	try {
+    		PreparedStatement ps = conn.prepareStatement(sql);
+    		ps.execute();
+    		ps.close();
+    	}catch(SQLException e) {
+    		throw new RuntimeException(e);
+    	}
+    }
 }
